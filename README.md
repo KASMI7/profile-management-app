@@ -17,7 +17,7 @@ Profiles List Demo is a React-based application that allows users to create, vie
 
 The application is deployed and can be viewed at the following link:
 
-[Live Demo of Profile Management App](https://KASMI7.github.io/profile-management-app/#/)
+[Live Demo of Profile Management App](https://KASMI7.github.io/profile-management-app/#/profile-form)
 
 ## Prerequisites
 
