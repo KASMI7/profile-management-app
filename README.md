@@ -13,6 +13,12 @@ Profiles List Demo is a React-based application that allows users to create, vie
 - **Error Handling**: Displays proper messages for form validation errors or failed API requests.
 - **Responsive Design**: Optimized for both desktop and mobile screens.
 
+## Demo
+
+The application is deployed and can be viewed at the following link:
+
+[Live Demo of Profile Management App](https://KASMI7.github.io/profile-management-app)
+
 ## Prerequisites
 
 Before you begin, ensure you have the following installed:
