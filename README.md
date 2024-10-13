@@ -83,17 +83,23 @@ profile-management-demo/
 └── tsconfig.json              # TypeScript configuration
 ```
 
-### Key Points:
+# Key Points:
 
-1. **Profile List Screenshot**:
-   Add this to showcase the profile listing UI in your app:
-   ```markdown
-   ![Profile List](./public/assets/profile-screen.png)
-   ![Profile Creation Form](./public/assets/profile-form.png)
-   ![Profile Add Form Dialog](./public/assets/profile-add.png)
-   ![Profile Edit Form Dialog](./public/assets/profile-edit.png)
-   ![Profile Delete Confirmation Dialog](./public/assets/delete-profile-confirmation.png)
-   ```
+1. Profile List Screenshot:
+   ![Profile List](/assets/profile-screen.png)
+
+2. Profile Creation Form:
+   ![Profile Creation Form](/assets/profile-form.png)
+
+3. Profile Add Form Dialog:
+   ![Profile Add Form Dialog](/assets/profile-add.png)
+
+4. Profile Edit Form Dialog:
+   ![Profile Edit Form Dialog](/assets/profile-edit.png)
+
+5. Profile Delete Confirmation Dialog:
+   ![Profile Delete Confirmation Dialog](/assets/delete-profile-confirmation.png)
+
 
 ### License
 
