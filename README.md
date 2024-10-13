@@ -51,9 +51,9 @@ REACT_APP_API_URL=http://localhost:3001
 
 In the terminal, run the following command to start the React development server:
 
-````bash
-npm start
-```
+    ````bash
+    npm start
+    ```
 
 - This will launch the React app at [http://localhost:3000](http://localhost:3000). At the same time, JSON server will run on [http://localhost:3001](http://localhost:3001) for API functionality.
 
