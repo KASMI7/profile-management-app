@@ -55,14 +55,14 @@ In the terminal, run the following command to start the React development server
 npm start
 ```
 
-This will launch the React app at [http://localhost:3000](http://localhost:3000). At the same time, JSON server will run on [http://localhost:3001](http://localhost:3001) for API functionality.
+- This will launch the React app at [http://localhost:3000](http://localhost:3000). At the same time, JSON server will run on [http://localhost:3001](http://localhost:3001) for API functionality.
 
 - **React app:** [http://localhost:3000](http://localhost:3000)
 - **JSON server:** [http://localhost:3001](http://localhost:3001)
 
-Once the development server is running, open your browser and navigate to `http://localhost:3000` to view the app.
+- Once the development server is running, open your browser and navigate to `http://localhost:3000` to view the app.
 
-## Project Structure
+### 5. Project Structure
 
 ```bash
 profile-management-demo/
@@ -81,8 +81,9 @@ profile-management-demo/
 ├── README.md                  # Project documentation
 ├── package.json               # Project dependencies and scripts
 └── tsconfig.json              # TypeScript configuration
-````
+```
 
 ### License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+````
