@@ -1,0 +1,30 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Inter';
+}
+
+.not-found-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  text-align: center;
+}
+
+.not-found-image {
+  max-width: 400px;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.not-found-text {
+  font-size: 24px;
+  color: #333;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
