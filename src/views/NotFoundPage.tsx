@@ -10,8 +10,7 @@ const NotFoundPage = () => {
           </h2>
           <p className='text-2xl font-semibold md:text-3xl'>Sorry, we couldn't find this page.</p>
           <p className='mt-4 mb-8 dark:text-gray-600'>But dont worry, you can find plenty of other things on our homepage.</p>
-          <a rel='noopener noreferrer' href='#profile-form' className='btn border-none w-[70%] mt-5 text-white py-2 rounded-lg'
-              style={{ background: 'linear-gradient(to right, #f78312 0, #f44336 100%)' }}>
+          <a rel='noopener noreferrer' href='#profile-form' className='btn border-none w-[70%] mt-5 text-white py-2 rounded-lg' style={{ background: 'linear-gradient(to right, #f78312 0, #f44336 100%)' }}>
             Back to homepage
           </a>
         </div>

@@ -60,17 +60,7 @@ const UserModal: React.FC<ModalProps> = React.memo(({ user, isNewUser, isChanged
             <label htmlFor='username' className='block text-gray-600 text-sm font-medium mb-1'>
               Username<span className='text-red-500 ml-1'>*</span>
             </label>
-            <input
-              type='text'
-              minLength={3}
-              id='username'
-              name='username'
-              className='w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500'
-              placeholder='Enter your username'
-              value={user.name}
-              onChange={(e) => onChange('name', e.target.value)}
-              required
-            />
+            <input type='text' minLength={3} id='username' name='username' className='w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500' placeholder='Enter your username' value={user.name} onChange={(e) => onChange('name', e.target.value)} required />
           </div>
 
           <div className='mb-4'>
@@ -84,9 +74,7 @@ const UserModal: React.FC<ModalProps> = React.memo(({ user, isNewUser, isChanged
               value={user.email}
               onChange={handleEmailChange}
               disabled={!isNewUser} // Disable email editing for existing users
-              className={`w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500 ${
-                emailError ? 'border-red-500' : ''
-              }`}
+              className={`w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500 ${emailError ? 'border-red-500' : ''}`}
               placeholder='Enter your email'
               required
             />
@@ -119,12 +107,7 @@ const UserModal: React.FC<ModalProps> = React.memo(({ user, isNewUser, isChanged
             <button type='button' className='btn bg-gray-200 mr-4' onClick={onClose}>
               Cancel
             </button>
-            <button
-              type='submit'
-              className='btn border-none text-white w-[20%]'
-              style={{ background: 'linear-gradient(to right, #f78312 0, #f44336 100%)' }}
-              disabled={!isChanged && !isNewUser}
-            >
+            <button type='submit' className='btn border-none text-white w-[20%]' style={{ background: 'linear-gradient(to right, #f78312 0, #f44336 100%)' }} disabled={!isChanged && !isNewUser}>
               Save
             </button>
           </div>

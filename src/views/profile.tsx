@@ -60,13 +60,16 @@ const ProfileTable: React.FC = () => {
   }, []);
 
   // Memoize handleInputChange to avoid unnecessary re-renders
-  const handleInputChange = useCallback((field: keyof Profile, value: string | number) => {
-    if (modalProfile) {
-      const updatedProfile = { ...modalProfile, [field]: value };
-      setModalProfile(updatedProfile);
-      setIsChanged(true);
-    }
-  }, [modalProfile]);
+  const handleInputChange = useCallback(
+    (field: keyof Profile, value: string | number) => {
+      if (modalProfile) {
+        const updatedProfile = { ...modalProfile, [field]: value };
+        setModalProfile(updatedProfile);
+        setIsChanged(true);
+      }
+    },
+    [modalProfile]
+  );
 
   const handleDeleteConfirmation = (id: string | null, name: string) => {
     setDeleteConfirmation({ id, name });

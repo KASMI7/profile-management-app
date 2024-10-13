@@ -15,7 +15,7 @@ const AddProfile: React.FC = () => {
     id: '',
     name: '',
     email: '',
-    age: 0,
+    age: 0
   });
 
   const [emailError, setEmailError] = useState<string | null>(null); // State for email validation
@@ -32,7 +32,7 @@ const AddProfile: React.FC = () => {
           const lastProfile = profiles[profiles.length - 1];
           setLastUser({
             ...lastProfile,
-            age: lastProfile.age ?? 0, // Ensure age is a number, default to 0 if undefined
+            age: lastProfile.age ?? 0 // Ensure age is a number, default to 0 if undefined
           });
         }
       } catch (err) {
@@ -58,7 +58,7 @@ const AddProfile: React.FC = () => {
 
     setFormData((prevFormData) => ({
       ...prevFormData,
-      [name]: name === 'age' ? Number(value) : value,
+      [name]: name === 'age' ? Number(value) : value
     }));
   }, []);
 
@@ -120,35 +120,14 @@ const AddProfile: React.FC = () => {
               <label htmlFor='name' className='block text-gray-600 text-sm font-medium mb-1'>
                 Name<span className='text-red-500 ml-1'>*</span>
               </label>
-              <input
-                type='text'
-                minLength={3}
-                id='name'
-                name='name'
-                className='w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-[#F56124]'
-                placeholder='Enter your name'
-                value={formData.name}
-                onChange={handleInputChange}
-                required
-              />
+              <input type='text' minLength={3} id='name' name='name' className='w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-[#F56124]' placeholder='Enter your name' value={formData.name} onChange={handleInputChange} required />
             </div>
 
             <div className='mb-4'>
               <label htmlFor='email' className='block text-gray-600 text-sm font-medium mb-1'>
                 Email<span className='text-red-500 ml-1'>*</span>
               </label>
-              <input
-                type='email'
-                id='email'
-                name='email'
-                value={formData.email}
-                onChange={handleInputChange}
-                className={`w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-[#F56124] ${
-                  emailError ? 'border-red-500' : ''
-                }`}
-                placeholder='Enter your email'
-                required
-              />
+              <input type='email' id='email' name='email' value={formData.email} onChange={handleInputChange} className={`w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-[#F56124] ${emailError ? 'border-red-500' : ''}`} placeholder='Enter your email' required />
               {emailError && <p className='text-red-500 text-sm'>{emailError}</p>}
             </div>
 
@@ -180,11 +159,7 @@ const AddProfile: React.FC = () => {
               </div>
             )}
 
-            <button
-              type='submit'
-              className='btn border-none w-full mt-5 text-white py-2 rounded-lg'
-              style={{ background: 'linear-gradient(to right, #f78312 0, #f44336 100%)' }}
-            >
+            <button type='submit' className='btn border-none w-full mt-5 text-white py-2 rounded-lg' style={{ background: 'linear-gradient(to right, #f78312 0, #f44336 100%)' }}>
               Add Profile
             </button>
           </form>
