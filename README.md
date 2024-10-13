@@ -86,19 +86,19 @@ profile-management-demo/
 # Key Points:
 
 1. Profile List Screenshot:
-   ![Profile List](/assets/profile-screen.png)
+   ![Profile List](assets/profile-screen.png)
 
 2. Profile Creation Form:
-   ![Profile Creation Form](/assets/profile-form.png)
+   ![Profile Creation Form](assets/profile-form.png)
 
 3. Profile Add Form Dialog:
-   ![Profile Add Form Dialog](/assets/profile-add.png)
+   ![Profile Add Form Dialog](assets/profile-add.png)
 
 4. Profile Edit Form Dialog:
-   ![Profile Edit Form Dialog](/assets/profile-edit.png)
+   ![Profile Edit Form Dialog](assets/profile-edit.png)
 
 5. Profile Delete Confirmation Dialog:
-   ![Profile Delete Confirmation Dialog](/assets/delete-profile-confirmation.png)
+   ![Profile Delete Confirmation Dialog](assets/delete-profile-confirmation.png)
 
 
 ### License
