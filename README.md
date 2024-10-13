@@ -86,19 +86,29 @@ profile-management-demo/
 # Key Points:
 
 1. Profile List Screenshot:
-   ![Profile List](public/assets/profile-screen.png)
+   <div style="margin-top: 20px;">
+      <img src="public/assets/profile-screen.png" alt="Profile List" />
+   </div>
 
 2. Profile Creation Form:
-   ![Profile Creation Form](public/assets/profile-form.png)
+   <div style="margin-top: 20px;">
+      <img src="public/assets/profile-form.png" alt="Profile Creation Form" />
+   </div>
 
 3. Profile Add Form Dialog:
-   ![Profile Add Form Dialog](public/assets/profile-add.png)
+   <div style="margin-top: 20px;">
+      <img src="public/assets/profile-add.png" alt="Profile Add Form Dialog" />
+   </div>
 
 4. Profile Edit Form Dialog:
-   ![Profile Edit Form Dialog](public/assets/profile-edit.png)
+   <div style="margin-top: 20px;">
+      <img src="public/assets/profile-edit.png" alt="Profile Edit Form Dialog" />
+   </div>
 
 5. Profile Delete Confirmation Dialog:
-   ![Profile Delete Confirmation Dialog](public/assets/delete-profile-confirmation.png)
+   <div style="margin-top: 20px;">
+      <img src="public/assets/delete-profile-confirmation.png" alt="Profile Delete Confirmation Dialog" />
+   </div>
 
 
 ### License
