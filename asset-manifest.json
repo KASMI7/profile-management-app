@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/profile-management-app/static/css/main.103a8894.css",
-    "main.js": "/profile-management-app/static/js/main.8471b2ff.js",
+    "main.js": "/profile-management-app/static/js/main.bad13376.js",
     "index.html": "/profile-management-app/index.html",
     "main.103a8894.css.map": "/profile-management-app/static/css/main.103a8894.css.map",
-    "main.8471b2ff.js.map": "/profile-management-app/static/js/main.8471b2ff.js.map"
+    "main.bad13376.js.map": "/profile-management-app/static/js/main.bad13376.js.map"
   },
   "entrypoints": [
     "static/css/main.103a8894.css",
-    "static/js/main.8471b2ff.js"
+    "static/js/main.bad13376.js"
   ]
 }
