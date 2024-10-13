@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 
 interface User {
   name: string;
@@ -19,29 +19,36 @@ interface ModalProps {
 const UserModal: React.FC<ModalProps> = React.memo(({ user, isNewUser, isChanged, onClose, onSave, onChange, error }) => {
   // Email error state for validation
   const [emailError, setEmailError] = useState<string | null>(null);
-  // Handle form submission
-  const handleFormSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
 
-    // Prevent submission if there is an email validation error
-    if (emailError) {
-      return;
-    }
-    onSave();
-  };
+  // Memoized form submission handler to prevent unnecessary re-renders
+  const handleFormSubmit = useCallback(
+    (e: React.FormEvent) => {
+      e.preventDefault();
 
-  // Handle email validation
-  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const emailValue = e.target.value;
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      // Prevent submission if there is an email validation error
+      if (emailError) {
+        return;
+      }
+      onSave();
+    },
+    [emailError, onSave]
+  );
 
-    if (!emailRegex.test(emailValue)) {
-      setEmailError('Please enter a valid email address');
-    } else {
-      setEmailError(null); // Clear error if email is valid
-    }
-    onChange('email', emailValue);
-  };
+  // Memoized email change handler to prevent unnecessary re-renders
+  const handleEmailChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const emailValue = e.target.value;
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+      if (!emailRegex.test(emailValue)) {
+        setEmailError('Please enter a valid email address');
+      } else {
+        setEmailError(null); // Clear error if email is valid
+      }
+      onChange('email', emailValue);
+    },
+    [onChange]
+  );
 
   return (
     <dialog id='user_modal' className='modal modal-open'>

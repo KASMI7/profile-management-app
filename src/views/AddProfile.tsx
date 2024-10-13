@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import { createProfile, fetchProfiles } from '../services'; // Import the createProfile and fetchProfiles functions
@@ -29,7 +29,6 @@ const AddProfile: React.FC = () => {
       try {
         const profiles = await fetchProfiles(); // Fetch all profiles
         if (profiles.length > 0) {
-          // Ensure age is defined and set to 0 if undefined
           const lastProfile = profiles[profiles.length - 1];
           setLastUser({
             ...lastProfile,
@@ -43,8 +42,8 @@ const AddProfile: React.FC = () => {
     getLastUser();
   }, []);
 
-  // Handle input changes
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+  // Memoized handleInputChange to avoid unnecessary re-renders
+  const handleInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>): void => {
     const { name, value } = e.target;
 
     // For email validation
@@ -61,50 +60,56 @@ const AddProfile: React.FC = () => {
       ...prevFormData,
       [name]: name === 'age' ? Number(value) : value,
     }));
-  };
+  }, []);
 
-  // Handle form submission with validation
-  const handleSubmit = async (e: React.FormEvent): Promise<void> => {
-    e.preventDefault();
+  // Memoized handleSubmit to avoid unnecessary re-renders
+  const handleSubmit = useCallback(
+    async (e: React.FormEvent): Promise<void> => {
+      e.preventDefault();
 
-    // Check for email validation
-    if (emailError) {
-      return; // Prevent form submission if email is invalid
-    }
-
-    try {
-      // Fetch the list of profiles to check for duplicate names
-      const profileList = await fetchProfiles();
-
-      // Check if a profile with the same name exists
-      const existingUser = profileList.find((profile) => profile.name === formData.name);
-
-      if (existingUser) {
-        // If the user already exists, display a warning
-        setError('This username is already registered.');
-        return;
+      // Check for email validation
+      if (emailError) {
+        return; // Prevent form submission if email is invalid
       }
 
-      // Generate a unique id for the new profile
-      const newProfile = { ...formData, id: String(Date.now()) }; // Use Date.now() as a simple unique id
+      try {
+        // Fetch the list of profiles to check for duplicate names
+        const profileList = await fetchProfiles();
 
-      // Use the createProfile service function to add the new profile
-      await createProfile(newProfile);
+        // Check if a profile with the same name exists
+        const existingUser = profileList.find((profile) => profile.name === formData.name);
 
-      // Clear error message if successful
-      setError('');
+        if (existingUser) {
+          // If the user already exists, display a warning
+          setError('This username is already registered.');
+          return;
+        }
 
-      // Redirect to the profile list after successful profile creation
-      navigate('/profile');
-    } catch (err) {
-      console.error('Failed to add profile:', err);
-      setError('Failed to add profile. Please try again.');
-    }
-  };
+        // Generate a unique id for the new profile
+        const newProfile = { ...formData, id: String(Date.now()) }; // Use Date.now() as a simple unique id
+
+        // Use the createProfile service function to add the new profile
+        await createProfile(newProfile);
+
+        // Clear error message if successful
+        setError('');
+
+        // Redirect to the profile list after successful profile creation
+        navigate('/profile');
+      } catch (err) {
+        console.error('Failed to add profile:', err);
+        setError('Failed to add profile. Please try again.');
+      }
+    },
+    [emailError, formData, navigate]
+  );
+
+  // Memoized lastUser value
+  const lastUserMemo = useMemo(() => lastUser, [lastUser]);
 
   return (
     <div className='w-full h-full'>
-      <Header lastUser={lastUser} />
+      <Header lastUser={lastUserMemo} />
       <div className='min-h-[90vh] flex flex-col justify-center items-center bg-gray-100 px-4'>
         <div className='bg-white rounded-lg shadow-lg px-8 py-[30px] w-full max-w-sm sm:max-w-md lg:max-w-lg transition-all duration-300 ease-in-out my-5'>
           <p className='text-[30px] mb-5 font-[500]' style={{ color: '#F56124' }}>

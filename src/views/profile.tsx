@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import Header from '../components/Header';
 import UserModal from '../components/UserModal';
 import { fetchProfiles, createProfile, updateProfile, deleteProfile } from '../services'; // Import necessary service functions
@@ -39,7 +39,8 @@ const ProfileTable: React.FC = () => {
     fetchData();
   }, [navigate]);
 
-  const openModal = (profile: Profile | null = null) => {
+  // Memoize openModal to avoid unnecessary re-renders
+  const openModal = useCallback((profile: Profile | null = null) => {
     if (profile) {
       setModalProfile({ ...profile });
       setIsNewProfile(false);
@@ -50,26 +51,27 @@ const ProfileTable: React.FC = () => {
     setIsModalOpen(true);
     setIsChanged(false);
     setError(null);
-  };
+  }, []);
 
-  const closeModal = () => {
+  // Memoize closeModal
+  const closeModal = useCallback(() => {
     setIsModalOpen(false);
     setError(null);
-  };
+  }, []);
 
-  const handleInputChange = (field: keyof Profile, value: string | number) => {
+  // Memoize handleInputChange to avoid unnecessary re-renders
+  const handleInputChange = useCallback((field: keyof Profile, value: string | number) => {
     if (modalProfile) {
       const updatedProfile = { ...modalProfile, [field]: value };
       setModalProfile(updatedProfile);
       setIsChanged(true);
     }
-  };
+  }, [modalProfile]);
 
   const handleDeleteConfirmation = (id: string | null, name: string) => {
     setDeleteConfirmation({ id, name });
   };
-
-  const saveProfileHandler = async () => {
+  const saveProfileHandler = useCallback(async () => {
     if (modalProfile) {
       if (!modalProfile.name.trim() || !modalProfile.email.trim()) {
         setError('Please fill in all required fields (Name and Email).');
@@ -99,9 +101,9 @@ const ProfileTable: React.FC = () => {
         setError('Error saving profile');
       }
     }
-  };
+  }, [modalProfile, isNewProfile, profileList, closeModal]);
 
-  const deleteProfileHandler = async () => {
+  const deleteProfileHandler = useCallback(async () => {
     if (deleteConfirmation.id !== null) {
       try {
         await deleteProfile(deleteConfirmation.id); // Use deleteProfile service
@@ -116,9 +118,10 @@ const ProfileTable: React.FC = () => {
         setError('Error deleting profile');
       }
     }
-  };
+  }, [deleteConfirmation, profileList, navigate]);
 
-  const lastUser = profileList.length > 0 ? profileList[profileList.length - 1] : null;
+  // Use useMemo to avoid recalculating lastUser unnecessarily
+  const lastUser = useMemo(() => (profileList.length > 0 ? profileList[profileList.length - 1] : null), [profileList]);
 
   return (
     <div style={{ height: '100vh', width: '100%' }}>
