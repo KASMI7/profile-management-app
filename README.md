@@ -19,6 +19,10 @@ The application is deployed and can be viewed at the following link:
 
 [Live Demo of Profile Management App](https://KASMI7.github.io/profile-management-app/#/profile-form)
 
+### Known Issue
+- The backend (API) is not hosted, so data persistence features (like profile creation and editing) may not function as expected in the demo. To test the full functionality, you can run the app locally using `json-server` or deploy the backend separately (e.g., Heroku) as explained in the documentation.
+
+
 ## Prerequisites
 
 Before you begin, ensure you have the following installed:
