@@ -74,7 +74,7 @@ profile-management-demo/
 │   ├── components/            # Reusable components (e.g., ProfileForm, ProfileList)
 │   ├── context/               # React Context API setup for global state management
 │   ├── views/                 # Main pages (ProfileCreation, ProfilesList)
-│   ├── services/              # API service handlers
+│   ├── services.tsx              # API service handlers
 │   └── App.tsx                # Main app component
 │
 ├── .env                       # Environment variables file
@@ -86,4 +86,3 @@ profile-management-demo/
 ### License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
-````

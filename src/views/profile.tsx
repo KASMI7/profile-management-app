@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import UserModal from '../components/UserModal';
-import axios from 'axios';
-
-const BASE_URL = process.env.REACT_APP_API_URL;
-console.log('BASE_URL', BASE_URL);
+import { fetchProfiles, createProfile, updateProfile, deleteProfile } from '../services'; // Import necessary service functions
+import { useNavigate } from 'react-router-dom';
 
 interface Profile {
-  id: string; // Updated id to string
+  id: string;
   name: string;
   email: string;
   age?: number;
@@ -22,30 +20,31 @@ const ProfileTable: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [deleteConfirmation, setDeleteConfirmation] = useState<{ id: string | null; name: string }>({ id: null, name: '' });
 
-  const API_URL = `${BASE_URL}/profile-list`;
+  const navigate = useNavigate();
 
-  // Fetch profile list from JSON server
+  // Fetch profile list
   useEffect(() => {
-    const fetchProfiles = async () => {
+    const fetchData = async () => {
       try {
-        const response = await axios.get<Profile[]>(API_URL);
-        setProfileList(response.data);
+        const data = await fetchProfiles(); // Fetch profiles using the service function
+        setProfileList(data);
+        if (data.length === 0) {
+          navigate('/profile-form'); // Redirect if no profiles are found
+        }
       } catch (error) {
         setError('Error fetching profiles');
       }
     };
 
-    fetchProfiles();
-  }, []);
+    fetchData();
+  }, [navigate]);
 
   const openModal = (profile: Profile | null = null) => {
     if (profile) {
-      // Edit existing profile
       setModalProfile({ ...profile });
       setIsNewProfile(false);
     } else {
-      // Create new profile
-      setModalProfile({ id: String(Date.now()), name: '', email: '', age: undefined }); // Use string id
+      setModalProfile({ id: String(Date.now()), name: '', email: '', age: undefined });
       setIsNewProfile(true);
     }
     setIsModalOpen(true);
@@ -66,58 +65,54 @@ const ProfileTable: React.FC = () => {
     }
   };
 
-  const saveProfile = async () => {
+  const handleDeleteConfirmation = (id: string | null, name: string) => {
+    setDeleteConfirmation({ id, name });
+  };
+
+  const saveProfileHandler = async () => {
     if (modalProfile) {
-      // Check for empty fields
       if (!modalProfile.name.trim() || !modalProfile.email.trim()) {
         setError('Please fill in all required fields (Name and Email).');
         return;
       }
 
-      // Check for duplicate name
-      const duplicateNameProfile = profileList.find(
-        (profile) => profile.name === modalProfile.name && profile.id !== modalProfile.id
-      );
+      const duplicateNameProfile = profileList.find((profile) => profile.name === modalProfile.name && profile.id !== modalProfile.id);
       if (duplicateNameProfile) {
         setError('This name is already used by another profile. Please use a different name.');
         return;
       }
 
-      setError(null); // Clear error if validation passes
-
       try {
+        let savedProfile: Profile; // Explicitly define the type of savedProfile
+
         if (isNewProfile) {
-          // Add new profile (POST)
-          const response = await axios.post(API_URL, JSON.stringify(modalProfile));
-          setProfileList([...profileList, response.data]);
+          savedProfile = await createProfile(modalProfile); // Use createProfile for new profiles
+          setProfileList([...profileList, savedProfile]);
         } else {
-          // Convert the id to a string when making the PUT request
-          const profileId = String(modalProfile.id);
-          await axios.put(`${API_URL}/${profileId}`, modalProfile); // Ensure id is a string
-          const updatedProfiles = profileList.map((profile) =>
-            profile.id === modalProfile.id ? modalProfile : profile
-          );
+          savedProfile = await updateProfile(modalProfile); // Use updateProfile for existing profiles
+          const updatedProfiles = profileList.map((profile) => (profile.id === modalProfile.id ? savedProfile : profile));
           setProfileList(updatedProfiles);
         }
 
         closeModal();
       } catch (error) {
-        console.error('Error saving profile:', error); // Log error details
         setError('Error saving profile');
       }
     }
   };
 
-  const handleDeleteConfirmation = (id: string, name: string) => {
-    setDeleteConfirmation({ id, name });
-  };
 
-  const deleteProfile = async () => {
+  const deleteProfileHandler = async () => {
     if (deleteConfirmation.id !== null) {
       try {
-        await axios.delete(`${API_URL}/${deleteConfirmation.id}`);
-        setProfileList(profileList.filter((profile) => profile.id !== deleteConfirmation.id));
+        await deleteProfile(deleteConfirmation.id); // Use deleteProfile service
+        const updatedProfileList = profileList.filter((profile) => profile.id !== deleteConfirmation.id);
+        setProfileList(updatedProfileList);
         setDeleteConfirmation({ id: null, name: '' });
+
+        if (updatedProfileList.length === 0) {
+          navigate('/profile-form');
+        }
       } catch (error) {
         setError('Error deleting profile');
       }
@@ -132,11 +127,7 @@ const ProfileTable: React.FC = () => {
           <h1 className='text-[#F56124] font-[500]' style={{ fontSize: 'clamp(15px, 4vw, 30px)' }}>
             Manage Profiles
           </h1>
-          <button
-            className='btn border-none text-white'
-            style={{ background: 'linear-gradient(to right, #f78312 0, #f44336 100%)' }}
-            onClick={() => openModal()}
-          >
+          <button className='btn border-none text-white' style={{ background: 'linear-gradient(to right, #f78312 0, #f44336 100%)' }} onClick={() => openModal()}>
             <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' className='bi bi-plus-circle-fill mr-2'>
               <path d='M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z' />
             </svg>
@@ -149,18 +140,10 @@ const ProfileTable: React.FC = () => {
           <table className='min-w-full bg-white shadow-xl rounded-md'>
             <thead>
               <tr className='bg-gray-300'>
-                <th className='px-6 py-3 border-b border-gray-300 text-left text-xs md:text-sm leading-4 text-gray-600 uppercase'>
-                  Name
-                </th>
-                <th className='px-6 py-3 border-b border-gray-300 text-left text-xs md:text-sm leading-4 text-gray-600 uppercase'>
-                  Email
-                </th>
-                <th className='px-6 py-3 border-b border-gray-300 text-left text-xs md:text-sm leading-4 text-gray-600 uppercase'>
-                  Age
-                </th>
-                <th className='px-6 py-3 border-b border-gray-300 text-left text-xs md:text-sm leading-4 text-gray-600 uppercase'>
-                  Actions
-                </th>
+                <th className='px-6 py-3 border-b border-gray-300 text-left text-xs md:text-sm leading-4 text-gray-600 uppercase'>Name</th>
+                <th className='px-6 py-3 border-b border-gray-300 text-left text-xs md:text-sm leading-4 text-gray-600 uppercase'>Email</th>
+                <th className='px-6 py-3 border-b border-gray-300 text-left text-xs md:text-sm leading-4 text-gray-600 uppercase'>Age</th>
+                <th className='px-6 py-3 border-b border-gray-300 text-left text-xs md:text-sm leading-4 text-gray-600 uppercase'>Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -198,7 +181,7 @@ const ProfileTable: React.FC = () => {
           isChanged={isChanged}
           error={error} // Pass the error to the modal
           onClose={closeModal}
-          onSave={saveProfile}
+          onSave={saveProfileHandler}
           onChange={handleInputChange}
         />
       )}
@@ -213,7 +196,7 @@ const ProfileTable: React.FC = () => {
               <button onClick={() => setDeleteConfirmation({ id: null, name: '' })} className='btn'>
                 Cancel
               </button>
-              <button onClick={deleteProfile} className='btn btn-error'>
+              <button onClick={deleteProfileHandler} className='btn btn-error'>
                 Delete
               </button>
             </div>
