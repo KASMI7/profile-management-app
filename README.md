@@ -1,14 +1,14 @@
 # Profile Management Demo
 
-Profiles List Demo is a React-based application that allows users to create, view and manage profiles. This demo app demonstrates effective handling of user profiles, incorporating features such as form validation, data persistence, and smooth navigation.
+Profiles Management Demo is a React-based application that allows users to create, view and manage profiles. This demo app demonstrates effective handling of user profiles, incorporating features such as form validation, data persistence, and smooth navigation.
 
 ## Features
 
-- **Profile Creation**: Users can fill out their name, email, and age to create a profile. The form includes validation to ensure correct data entry.
+- **Profile Creation**: Users can create profiles by entering their name, email, and age. The form includes validation to ensure correct data entry.
 - **Profiles List**: View all saved profiles in a list format.
 - **Profile Update**: Users can update existing profiles with new information.
 - **Routing**: Utilizes React Router for navigating between profile creation, viewing, and listing profiles.
-- **Data Persistence**: Profile data is stored in local storage to persist across page refreshes.
+- **Data Persistence**: Profile data is stored locally to persist across page refreshes.
 - **State Management**: Global state for profile data is handled using React Context API.
 - **Error Handling**: Displays proper messages for form validation errors or failed API requests.
 - **Responsive Design**: Optimized for both desktop and mobile screens.
