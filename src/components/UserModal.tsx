@@ -19,7 +19,6 @@ interface ModalProps {
 const UserModal: React.FC<ModalProps> = React.memo(({ user, isNewUser, isChanged, onClose, onSave, onChange, error }) => {
   // Email error state for validation
   const [emailError, setEmailError] = useState<string | null>(null);
-
   // Handle form submission
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -52,7 +51,7 @@ const UserModal: React.FC<ModalProps> = React.memo(({ user, isNewUser, isChanged
         <form onSubmit={handleFormSubmit}>
           <div className='mb-4'>
             <label htmlFor='username' className='block text-gray-600 text-sm font-medium mb-1'>
-              Username<span className='text-red-500'>*</span>
+              Username<span className='text-red-500 ml-1'>*</span>
             </label>
             <input
               type='text'
@@ -69,7 +68,7 @@ const UserModal: React.FC<ModalProps> = React.memo(({ user, isNewUser, isChanged
 
           <div className='mb-4'>
             <label htmlFor='email' className='block text-gray-600 text-sm font-medium mb-1'>
-              Email<span className='text-red-500'>*</span>
+              Email<span className='text-red-500 ml-1'>*</span>
             </label>
             <input
               type='email'

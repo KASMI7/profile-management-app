@@ -25,6 +25,10 @@
   color: #333;
 }
 
+html {
+  scrollbar-gutter: auto !important;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

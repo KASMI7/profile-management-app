@@ -1,6 +1,6 @@
 # Profile Management Demo
 
-Profiles List Demo is a React-based application that allows users to create, view, and manage profiles. This demo app demonstrates effective handling of user profiles, incorporating features such as form validation, data persistence, and smooth navigation.
+Profiles List Demo is a React-based application that allows users to create, view and manage profiles. This demo app demonstrates effective handling of user profiles, incorporating features such as form validation, data persistence, and smooth navigation.
 
 ## Features
 
@@ -51,9 +51,9 @@ REACT_APP_API_URL=http://localhost:3001
 
 - In the terminal, run the following command to start the React development server:
 
-    ```bash
-   npm start
-   ```
+  ```bash
+  npm start
+  ```
 
 - This will launch the React app at [http://localhost:3000](http://localhost:3000). At the same time, JSON server will run on [http://localhost:3001](http://localhost:3001) for API functionality.
 
@@ -82,6 +82,18 @@ profile-management-demo/
 ├── package.json               # Project dependencies and scripts
 └── tsconfig.json              # TypeScript configuration
 ```
+
+### Key Points:
+
+1. **Profile List Screenshot**:
+   Add this to showcase the profile listing UI in your app:
+   ```markdown
+   ![Profile List](./public/assets/profile-screen.png)
+   ![Profile Creation Form](./public/assets/profile-form.png)
+   ![Profile Add Form Dialog](./public/assets/profile-add.png)
+   ![Profile Edit Form Dialog](./public/assets/profile-edit.png)
+   ![Profile Delete Confirmation Dialog](./public/assets/delete-profile-confirmation.png)
+   ```
 
 ### License
 

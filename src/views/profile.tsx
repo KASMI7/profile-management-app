@@ -101,7 +101,6 @@ const ProfileTable: React.FC = () => {
     }
   };
 
-
   const deleteProfileHandler = async () => {
     if (deleteConfirmation.id !== null) {
       try {
@@ -119,9 +118,11 @@ const ProfileTable: React.FC = () => {
     }
   };
 
+  const lastUser = profileList.length > 0 ? profileList[profileList.length - 1] : null;
+
   return (
     <div style={{ height: '100vh', width: '100%' }}>
-      <Header />
+      <Header lastUser={lastUser} />
       <div className='min-h-[90vh] flex flex-col bg-gray-100 px-6'>
         <div className='w-full flex justify-between items-center mt-10 mb-6'>
           <h1 className='text-[#F56124] font-[500]' style={{ fontSize: 'clamp(15px, 4vw, 30px)' }}>
@@ -136,30 +137,40 @@ const ProfileTable: React.FC = () => {
         </div>
 
         {/* Profile Table */}
-        <div className='overflow-x-auto'>
-          <table className='min-w-full bg-white shadow-xl rounded-md'>
-            <thead>
-              <tr className='bg-gray-300'>
-                <th className='px-6 py-3 border-b border-gray-300 text-left text-xs md:text-sm leading-4 text-gray-600 uppercase'>Name</th>
-                <th className='px-6 py-3 border-b border-gray-300 text-left text-xs md:text-sm leading-4 text-gray-600 uppercase'>Email</th>
-                <th className='px-6 py-3 border-b border-gray-300 text-left text-xs md:text-sm leading-4 text-gray-600 uppercase'>Age</th>
-                <th className='px-6 py-3 border-b border-gray-300 text-left text-xs md:text-sm leading-4 text-gray-600 uppercase'>Actions</th>
+        <div className='max-h-[70vh] overflow-auto bg-white shadow-lg rounded-lg overflow-x-auto'>
+          <table className='min-w-full leading-normal relative'>
+            <thead className='text-white sticky top-0' style={{ background: 'linear-gradient(to right, #f78312 0, #f44336 100%)' }}>
+              <tr>
+                <th className='px-5 py-3 text-left text-sm font-semibold uppercase tracking-wider'>Name</th>
+                <th className='px-5 py-3 text-left text-sm font-semibold uppercase tracking-wider'>Email</th>
+                <th className='px-5 py-3 text-left text-sm font-semibold uppercase tracking-wider'>Age</th>
+                <th className='px-5 py-3 text-left text-sm font-semibold uppercase tracking-wider'>Actions</th>
               </tr>
             </thead>
-            <tbody>
-              {profileList.map((profile) => (
-                <tr key={profile.id}>
-                  <td className='px-6 py-4 border-b border-gray-300 text-xs md:text-sm'>{profile.name}</td>
-                  <td className='px-6 py-4 border-b border-gray-300 text-xs md:text-sm'>{profile.email}</td>
-                  <td className='px-6 py-4 border-b border-gray-300 text-xs md:text-sm'>{profile.age || 'N/A'}</td>
-                  <td className='px-6 py-4 border-b border-gray-300 text-xs md:text-sm'>
-                    <button onClick={() => openModal(profile)}>
+            <tbody className='bg-white'>
+              {profileList.map((profile, index) => (
+                <tr key={profile.id} className={`border-b ${index % 2 === 0 ? 'bg-gray-50' : 'bg-white'} hover:bg-gray-100 transition-colors duration-300`}>
+                  <td className='px-5 py-5 text-sm text-gray-900'>
+                    <div className='flex items-center'>
+                      <div className='ml-3'>
+                        <p className='text-gray-900 whitespace-no-wrap'>{profile.name}</p>
+                      </div>
+                    </div>
+                  </td>
+                  <td className='px-5 py-5 text-sm'>
+                    <p className='text-gray-500 whitespace-no-wrap'>{profile.email}</p>
+                  </td>
+                  <td className='px-5 py-5 text-sm'>
+                    <p className='text-gray-500 whitespace-no-wrap'>{profile.age || 'N/A'}</p>
+                  </td>
+                  <td className='px-5 py-5 text-sm space-x-2'>
+                    <button onClick={() => openModal(profile)} className='inline-block text-blue-500 hover:text-blue-700 transition-colors duration-300 mr-5'>
                       <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' className='bi bi-pencil-square'>
                         <path d='M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z' />
                         <path fillRule='evenodd' d='M1 13.5A1.5 1.5 0 0 0 2.5 15h11a.5.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z' />
                       </svg>
                     </button>
-                    <button onClick={() => handleDeleteConfirmation(profile.id, profile.name)} className='ml-5'>
+                    <button onClick={() => handleDeleteConfirmation(profile.id, profile.name)} className='inline-block text-red-500 hover:text-red-700 transition-colors duration-300'>
                       <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='#Ff0000' className='bi bi-trash' viewBox='0 0 16 16'>
                         <path d='M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z' />
                         <path d='M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z' />

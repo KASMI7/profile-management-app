@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
-import { createProfile, fetchProfiles } from '../services'; // Import the createProfile function
+import { createProfile, fetchProfiles } from '../services'; // Import the createProfile and fetchProfiles functions
 
 interface FormData {
   id: string;
@@ -12,7 +12,7 @@ interface FormData {
 
 const AddProfile: React.FC = () => {
   const [formData, setFormData] = useState<FormData>({
-    id: '', // Initialize id as an empty string
+    id: '',
     name: '',
     email: '',
     age: 0,
@@ -20,7 +20,28 @@ const AddProfile: React.FC = () => {
 
   const [emailError, setEmailError] = useState<string | null>(null); // State for email validation
   const [error, setError] = useState<string>(''); // General error state
+  const [lastUser, setLastUser] = useState<FormData | null>(null); // State to store the last user
   const navigate = useNavigate();
+
+  // Fetch profiles and get the last user
+  useEffect(() => {
+    const getLastUser = async () => {
+      try {
+        const profiles = await fetchProfiles(); // Fetch all profiles
+        if (profiles.length > 0) {
+          // Ensure age is defined and set to 0 if undefined
+          const lastProfile = profiles[profiles.length - 1];
+          setLastUser({
+            ...lastProfile,
+            age: lastProfile.age ?? 0, // Ensure age is a number, default to 0 if undefined
+          });
+        }
+      } catch (err) {
+        console.error('Failed to fetch profiles:', err);
+      }
+    };
+    getLastUser();
+  }, []);
 
   // Handle input changes
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -83,7 +104,7 @@ const AddProfile: React.FC = () => {
 
   return (
     <div className='w-full h-full'>
-      <Header />
+      <Header lastUser={lastUser} />
       <div className='min-h-[90vh] flex flex-col justify-center items-center bg-gray-100 px-4'>
         <div className='bg-white rounded-lg shadow-lg px-8 py-[30px] w-full max-w-sm sm:max-w-md lg:max-w-lg transition-all duration-300 ease-in-out my-5'>
           <p className='text-[30px] mb-5 font-[500]' style={{ color: '#F56124' }}>
@@ -92,7 +113,7 @@ const AddProfile: React.FC = () => {
           <form onSubmit={handleSubmit}>
             <div className='mb-4'>
               <label htmlFor='name' className='block text-gray-600 text-sm font-medium mb-1'>
-                Name<span className='text-red-500'>*</span>
+                Name<span className='text-red-500 ml-1'>*</span>
               </label>
               <input
                 type='text'
@@ -109,7 +130,7 @@ const AddProfile: React.FC = () => {
 
             <div className='mb-4'>
               <label htmlFor='email' className='block text-gray-600 text-sm font-medium mb-1'>
-                Email<span className='text-red-500'>*</span>
+                Email<span className='text-red-500 ml-1'>*</span>
               </label>
               <input
                 type='email'
